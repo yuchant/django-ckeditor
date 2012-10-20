@@ -53,9 +53,11 @@ def get_thumb_filename(file_name):
     """
     return '%s_thumb%s' % os.path.splitext(file_name)
 
+
 def get_image_format(extension):
     mimetypes.init()
-    return mimetypes.types_map[extension]
+    return mimetypes.types_map[extension.lower()]
+
 
 def create_thumbnail(filename):
     thumbnail_filename = get_thumb_filename(filename)
