@@ -4,6 +4,11 @@ Django CKEditor
 
 Provides a ``RichTextField`` and ``CKEditorWidget`` utilizing CKEditor with image upload and browsing support included.
 
+Forked and changed:
+    
+    Supports non image uploads
+    Supports default file storage (such as django-storages)
+
 .. contents:: Contents
     :depth: 5
 
