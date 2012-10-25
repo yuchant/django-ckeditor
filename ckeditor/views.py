@@ -54,14 +54,14 @@ def get_thumb_filename(file_name):
     return '%s_thumb%s' % os.path.splitext(file_name)
 
 
-def get_image_format(extension):
+def get_mimetype(extension):
     mimetypes.init()
     return mimetypes.types_map[extension.lower()]
 
 
 def create_thumbnail(filename):
     thumbnail_filename = get_thumb_filename(filename)
-    thumbnail_format = get_image_format(os.path.splitext(filename)[1])
+    thumbnail_format = get_mimetype(os.path.splitext(filename)[1])
     pil_format = thumbnail_format.split('/')[1]
 
     image = default_storage.open(filename)
@@ -122,9 +122,12 @@ def upload(request):
     # Open output file in which to store upload.
     upload_filename = get_upload_filename(upload.name, request.user)
 
+    mimetype, mimetype_secondary = get_mimetype(os.path.splitext(upload_filename)[1]).split('/')
+
     image = default_storage.save(upload_filename, upload)
 
-    create_thumbnail(image)
+    if mimetype == 'image':
+        create_thumbnail(image)
 
     # Respond with Javascript sending ckeditor upload url.
     url = get_media_url(image)
